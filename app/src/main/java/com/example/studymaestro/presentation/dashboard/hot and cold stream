@@ -1,0 +1,52 @@
+Great question — let’s break it down simply:
+
+---
+
+### 🔥 What is a **Hot Stream**?
+
+A **hot stream** (like `SharedFlow` or `StateFlow`) is:
+
+* **Always active** and **emits data regardless of whether there are collectors**.
+* Think of it like a **radio station**: it keeps broadcasting even if no one is listening.
+* Useful for things like **UI events**, **state updates**, or **notifications** that multiple parts of your app might care about.
+
+---
+
+### ❓ Then what is a **Cold Stream**?
+
+In contrast, a **cold stream** (like a regular `Flow`) is:
+
+* **Lazy**: It only starts emitting **when someone starts collecting** it.
+* Think of it like a **music playlist**: it only plays when you press play.
+* Each collector gets **their own fresh emissions** from the beginning.
+
+---
+
+### 👥 What are **Multiple Collectors**?
+
+When you collect from a flow like this:
+
+```kotlin
+snackbarEventFlow.collect { event -> ... }
+```
+
+That’s called a **collector**.
+
+If multiple parts of your app call `.collect` on the **same flow**, you have **multiple collectors**.
+
+* With **cold flows**, each collector runs **independently**.
+* With **hot flows** like `SharedFlow`, all collectors get **the same emissions** (like listeners getting the same broadcast).
+
+---
+
+### 🧠 TL;DR
+
+| Concept                 | Explanation                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| **Hot Stream**          | Emits regardless of collectors (`SharedFlow`, `StateFlow`)                        |
+| **Cold Stream**         | Emits only when collected (`Flow`)                                                |
+| **Multiple Collectors** | Multiple parts of your app listen to the same flow (e.g., multiple `.collect {}`) |
+
+---
+
+Let me know if you'd like a visual analogy or real-world example from Android development!
